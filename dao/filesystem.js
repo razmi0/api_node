@@ -7,10 +7,18 @@ const dirname = path.dirname(filename);
 const dataPath = path.join(dirname, "../data/parking.json");
 
 export const readJson = async () => {
-  const data = await fs.readFile(dataPath, "utf8");
-  return JSON.parse(data);
+  try {
+    const data = await fs.readFile(dataPath, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    throw new Error("Error reading JSON file");
+  }
 };
 
 export const writeJson = async (data) => {
-  await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
+  try {
+    await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
+  } catch (error) {
+    throw new Error("Error writing JSON file");
+  }
 };
