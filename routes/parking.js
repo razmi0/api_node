@@ -40,7 +40,6 @@ router.get("/:id/reservations", async (req, res) => {
       return res.status(codes.notFound).json({ error: "Parking not found" });
     }
     const reservationsIds = parking.reservation;
-    console.log(reservationsIds);
     const reservations = await Promise.allSettled(
       reservationsIds.map((id) => serviceReservation.getReservationById(id))
     );
