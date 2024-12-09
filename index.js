@@ -1,13 +1,18 @@
 import express from "express";
-import parkingsRoutes from "./routes/parking.js";
+import routes from "./routes/parking.js";
 
 const app = express();
 const PORT = 4791;
 
 app.use(express.json());
 
+// Control middleware
+app.get("/", (req, res, next) => {
+  res.send("Hello World");
+});
+
 // Routes
-app.use("/parkings", parkingsRoutes);
+app.use("/parkings", routes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
