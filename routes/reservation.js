@@ -14,6 +14,7 @@ const codes = {
  * read all reservations
  */
 router.get("/", async (req, res) => {
+  console.log("GET /reservations");
   try {
     const reservations = await service.getAllReservations();
     res.json(reservations);
@@ -27,6 +28,7 @@ router.get("/", async (req, res) => {
  * read reservation by id
  */
 router.get("/:id", async (req, res) => {
+  console.log("GET /reservations/:id");
   try {
     const reservation = await service.getReservationById(req.params.id);
     if (!reservation) {
@@ -42,6 +44,7 @@ router.get("/:id", async (req, res) => {
  * create reservation
  */
 router.post("/", async (req, res) => {
+  console.log("POST /reservations");
   try {
     const newReservation = await service.createReservation(req.body);
     res.status(codes.created).json(newReservation);
@@ -54,6 +57,7 @@ router.post("/", async (req, res) => {
  * update reservation
  */
 router.put("/:id", async (req, res) => {
+  console.log("PUT /reservations/:id");
   try {
     const updatedReservation = await service.updateReservation(req.params.id, req.body);
     if (!updatedReservation) {
@@ -69,6 +73,7 @@ router.put("/:id", async (req, res) => {
  * delete reservation
  */
 router.delete("/:id", async (req, res) => {
+  console.log("DELETE /reservations/:id");
   try {
     const success = await service.deleteReservation(req.params.id);
     if (!success) {

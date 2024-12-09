@@ -12,6 +12,7 @@ const codes = {
 };
 
 router.get("/", async (req, res) => {
+  console.log("GET /parkings");
   try {
     const parkings = await serviceParking.getAllParkings();
     res.json(parkings);
@@ -22,6 +23,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
+  console.log("GET /parkings/:id");
   try {
     const parking = await serviceParking.getParkingById(req.params.id);
     if (!parking) {
@@ -34,6 +36,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/:id/reservations", async (req, res) => {
+  console.log("GET /parkings/:id/reservations");
   try {
     const parking = await serviceParking.getParkingById(req.params.id);
     if (!parking) {
@@ -51,6 +54,7 @@ router.get("/:id/reservations", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  console.log("POST /parkings");
   try {
     const newParking = await serviceParking.createParking(req.body);
     res.status(codes.created).json(newParking);
@@ -60,6 +64,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/:id/reservations/:optional_reservation_id", async (req, res) => {
+  console.log("POST /parkings/:id/reservations/:optional_reservation_id");
   try {
     // Créer une réservation d’une place dans un parking(parking identifié par son id)
     const parking = await serviceParking.getParkingById(req.params.id);
@@ -84,6 +89,7 @@ router.post("/:id/reservations/:optional_reservation_id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+  console.log("PUT /parkings/:id");
   try {
     const updatedParking = await serviceParking.updateParking(req.params.id, req.body);
     if (!updatedParking) {
@@ -96,6 +102,7 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+  console.log("DELETE /parkings/:id");
   try {
     const success = await serviceParking.deleteParking(req.params.id);
     if (!success) {
@@ -108,6 +115,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.delete("/:parking_id/reservations/:reservation_id", async (req, res) => {
+  console.log("DELETE /parkings/:parking_id/reservations/:reservation_id");
   try {
     const parkingId = req.params.parking_id;
     const reservationId = req.params.reservation_id;
