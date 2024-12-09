@@ -60,6 +60,26 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/:id/reservations", async (req, res) => {
+  try {
+    // Créer une réservation d’une place dans un parking(parking identifié par son id)
+    const parking = await serviceParking.getParkingById(req.params.id);
+    if (!parking) {
+      return res.status(codes.notFound).json({ error: "Parking not found" });
+    }
+    const newReservation = await serviceReservation.createReservation(req.body);
+    const updatedParking = await serviceParking.updateParking(req.params.id, {
+      reservation: [...parking.reservation, newReservation.id],
+    });
+    if (updatedParking === null) {
+      res.status(codes.internal).json({ success: false, message: "Internal error" });
+    }
+    res.status(codes.created).json({ success: true, data: { parking: updatedParking, reservation: req.body } });
+  } catch (error) {
+    res.status(codes.internal).json({ error: error.message });
+  }
+});
+
 router.put("/:id", async (req, res) => {
   try {
     const updatedParking = await serviceParking.updateParking(req.params.id, req.body);
