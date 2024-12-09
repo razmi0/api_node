@@ -59,7 +59,7 @@ router.delete("/:id", async (req, res) => {
     if (!success) {
       return res.status(codes.notFound).json({ error: "Parking not found" });
     }
-    res.status(codes.created).send();
+    res.status(codes.ok).json({ success: true });
   } catch (error) {
     res.status(codes.internal).json({ error: error.message });
   }
