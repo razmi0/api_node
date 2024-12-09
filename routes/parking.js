@@ -60,14 +60,18 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/:id/reservations", async (req, res) => {
+router.post("/:id/reservations/:optional_reservation_id", async (req, res) => {
   try {
     // Créer une réservation d’une place dans un parking(parking identifié par son id)
     const parking = await serviceParking.getParkingById(req.params.id);
+    // Client data can provide an id for the reservation or not
+    // If provided, it can be provided inside the body or as a parameter
+    // The parameter has priority over the body
+    const reservationId = parseInt(req.params.optional_reservation_id, 10) ? req.body.id : null;
     if (!parking) {
       return res.status(codes.notFound).json({ error: "Parking not found" });
     }
-    const newReservation = await serviceReservation.createReservation(req.body);
+    const newReservation = await serviceReservation.createReservation(req.body, reservationId ? reservationId : null);
     const updatedParking = await serviceParking.updateParking(req.params.id, {
       reservation: [...parking.reservation, newReservation.id],
     });
