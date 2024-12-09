@@ -8,9 +8,9 @@ const getReservationById = async (id) => {
   return reservations.find((reservation) => reservation.id === parseInt(id));
 };
 
-const createReservation = async (reservationData) => {
+const createReservation = async (reservationData, reservationId = null) => {
   const reservations = await getAllReservations();
-  const newId = buildId(reservations);
+  const newId = reservationId ? reservationId : buildId(reservations);
   const newReservation = { ...reservationData, id: newId };
   reservations.push(newReservation);
   await writeReservationJson(reservations);
