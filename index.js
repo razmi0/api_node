@@ -18,7 +18,7 @@ app.use("/reservations", reservationRoutes); // reservation routes
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Something broke!" });
+  res.status(500).json({ error: "Quelques chose est cassé !" });
 });
 
 app.listen(PORT, () => {
