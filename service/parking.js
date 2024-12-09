@@ -1,7 +1,7 @@
-import { readJson, writeJson } from "../dao/filesystem.js";
+import { readParkingJson, writeParkingJson } from "../dao/filesystem.js";
 import { buildId } from "../helper.js";
 
-const getAllParkings = async () => await readJson();
+const getAllParkings = async () => await readParkingJson();
 
 const getParkingById = async (id) => {
   const parkings = await getAllParkings();
@@ -13,7 +13,7 @@ const createParking = async (parkingData) => {
   const newId = buildId(parkings);
   const newParking = { ...parkingData, id: newId };
   parkings.push(newParking);
-  await writeJson(parkings);
+  await writeParkingJson(parkings);
   return newParking;
 };
 
@@ -23,7 +23,7 @@ const updateParking = async (id, parkingData) => {
   if (index === -1) return null;
 
   parkings[index] = { ...parkings[index], ...parkingData };
-  await writeJson(parkings);
+  await writeParkingJson(parkings);
   return parkings[index];
 };
 
@@ -32,7 +32,7 @@ const deleteParking = async (id) => {
   const filteredParkings = parkings.filter((p) => p.id !== parseInt(id));
   if (filteredParkings.length === parkings.length) return false;
 
-  await writeJson(filteredParkings);
+  await writeParkingJson(filteredParkings);
   return true;
 };
 
