@@ -1,0 +1,2 @@
+const writeInJson = (data, path) => {
+    
